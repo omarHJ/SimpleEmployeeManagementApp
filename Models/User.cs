@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SimpleEmployeeManagementApp.Models
 {
@@ -12,9 +13,8 @@ namespace SimpleEmployeeManagementApp.Models
         public string UserName { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 6)]
-        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$", ErrorMessage = "Password must be at least 6 characters long and contain both letters and numbers.")]
-        public string Password { get; set; }
+        [Column(TypeName = "NVARCHAR(255)")]
+        public string PasswordHash { get; set; }
 
         [Required]
         [EmailAddress]

@@ -8,8 +8,19 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+
+
+builder.Services.AddDistributedMemoryCache(); // Adds an in-memory cache to store session data
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set a timeout for session, for example 30 minutes
+    options.Cookie.IsEssential = true; // Set session cookie as essential
+});
+
 
 var app = builder.Build();
 
@@ -25,6 +36,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 
