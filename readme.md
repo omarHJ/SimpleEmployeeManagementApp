@@ -63,9 +63,40 @@ The following NuGet packages were installed for this project:
 - **Microsoft.EntityFrameworkCore.SqlServer (9.0.3):** SQL Server database provider for Entity Framework Core.
 - **Microsoft.EntityFrameworkCore.Tools (9.0.3):** Tools for Entity Framework Core, including the EF Core CLI.
 
-### Code-First Database Creation
+
+## Code-First Database Creation
 
 The database schema was created using Entity Framework Core's Code-First approach. `DbContext` and model classes (`Employee`, `User`, `LoginViewModel`) define the structure, and migrations were used to generate and apply the database schema.
+
+### Database Configuration
+
+Before running the application, you need to update the connection string to point to your database.
+
+1. **Update the Connection String**:
+   - Open the `appsettings.json` file in the root of your project.
+   - Locate the `"ConnectionStrings"` section and update the `DefaultConnection` value with your own database connection string.
+
+   Example:
+   ```json
+   "ConnectionStrings": {
+     "DefaultConnection": "Server=your_server;Database=your_database;Trusted_Connection=True;MultipleActiveResultSets=true"
+   }
+   ```
+
+2. **Add a Migration**:
+   - Open the **Package Manager Console** in Visual Studio.
+   - Run the following command to add a new migration:
+   ```bash
+   Add-Migration InitialCreate
+   ```
+
+3. **Update the Database**:
+   - After adding the migration, run the following command to apply the changes to your database:
+   ```bash
+   Update-Database
+   ```
+
+This will create or update the database schema based on your current model definitions.
 
 ### Initial User Data (Hashed Password)
 
