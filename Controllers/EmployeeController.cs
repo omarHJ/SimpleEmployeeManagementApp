@@ -27,7 +27,6 @@ namespace SimpleEmployeeManagementApp.Controllers
             return View(employees);
         }
 
-        // GET: /Employee/Create
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Create()
         {
@@ -38,7 +37,6 @@ namespace SimpleEmployeeManagementApp.Controllers
             return View();
         }
 
-        // POST: /Employee/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
@@ -51,12 +49,11 @@ namespace SimpleEmployeeManagementApp.Controllers
             if (ModelState.IsValid)
             {
                 await _employeeService.AddEmployeeAsync(employee);
-                return RedirectToAction(nameof(Index)); // Redirect to the list after creation
+                return RedirectToAction(nameof(Index));
             }
-            return View(employee); // Return to the form with errors
+            return View(employee);
         }
 
-        // GET: /Employee/Edit/5
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> Edit(int id)
         {
@@ -72,7 +69,6 @@ namespace SimpleEmployeeManagementApp.Controllers
             return View(employee);
         }
 
-        // POST: /Employee/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
@@ -84,7 +80,7 @@ namespace SimpleEmployeeManagementApp.Controllers
             }
             if (id != employee.Id)
             {
-                return BadRequest(); // Or NotFound(), depending on your preference
+                return BadRequest(); 
             }
 
             if (ModelState.IsValid)
@@ -93,7 +89,7 @@ namespace SimpleEmployeeManagementApp.Controllers
                 {
                     await _employeeService.UpdateEmployeeAsync(employee);
                 }
-                catch (DbUpdateConcurrencyException) // Handle concurrency conflicts
+                catch (DbUpdateConcurrencyException) 
                 {
                     if (await _employeeService.GetEmployeeByIdAsync(id) == null)
                     {
@@ -109,7 +105,6 @@ namespace SimpleEmployeeManagementApp.Controllers
             return View(employee);
         }
 
-        // GET: /Employee/Delete/5
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> Delete(int id)
         {
@@ -124,10 +119,9 @@ namespace SimpleEmployeeManagementApp.Controllers
                 return NotFound();
             }
 
-            return View(employee); // Show a confirmation view
+            return View(employee); 
         }
 
-        // POST: /Employee/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]

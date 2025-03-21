@@ -3,14 +3,14 @@ using SimpleEmployeeManagementApp.Data;
 using SimpleEmployeeManagementApp.Models;
 using System.Threading.Tasks;
 using BCrypt.Net;
-using Microsoft.AspNetCore.Http; // Add this
+using Microsoft.AspNetCore.Http;
 
 namespace SimpleEmployeeManagementApp.Services
 {
     public class LoginService : ILoginService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor; // Add this
+        private readonly IHttpContextAccessor _httpContextAccessor; 
 
         public LoginService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context)
         {
@@ -20,7 +20,7 @@ namespace SimpleEmployeeManagementApp.Services
 
         public async Task<bool> LoginAsync(LoginViewModel model)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == model.Username);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
 
             if (user == null)
             {
@@ -31,9 +31,8 @@ namespace SimpleEmployeeManagementApp.Services
 
             if (isValidPassword)
             {
-                // Set a session variable to indicate successful login.
                 _httpContextAccessor.HttpContext.Session.SetString("IsLoggedIn", "true");
-                _httpContextAccessor.HttpContext.Session.SetInt32("UserId", user.Id); // Store UserId, you'll need it later on.
+                //_httpContextAccessor.HttpContext.Session.SetInt32("UserId", user.Id);
                 return true;
             }
 
@@ -42,20 +41,16 @@ namespace SimpleEmployeeManagementApp.Services
 
         public void Logout()
         {
-            // Clear the session variable.
-            _httpContextAccessor.HttpContext.Session.Clear(); // Clear the entire session
+            _httpContextAccessor.HttpContext.Session.Clear();
         }
 
-        // Add a method to check if the user is logged in
         public bool IsLoggedIn()
         {
             return _httpContextAccessor.HttpContext.Session.GetString("IsLoggedIn") == "true";
         }
-
-        //get logged in user id.
-        public int? GetLoggedInUserId()
+        public async Task<bool> UserExistsAsync(string email)
         {
-            return _httpContextAccessor.HttpContext.Session.GetInt32("UserId");
+            return await _context.Users.AnyAsync(u => u.Email == email);
         }
     }
 }

@@ -14,11 +14,11 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 
 
-builder.Services.AddDistributedMemoryCache(); // Adds an in-memory cache to store session data
+builder.Services.AddDistributedMemoryCache(); // in-memory cache to store session data
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set a timeout for session, for example 30 minutes
-    options.Cookie.IsEssential = true; // Set session cookie as essential
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // timeout for session = 30 minutes
+    options.Cookie.IsEssential = true; 
 });
 
 

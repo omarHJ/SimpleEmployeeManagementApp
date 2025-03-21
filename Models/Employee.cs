@@ -28,6 +28,6 @@ namespace SimpleEmployeeManagementApp.Models
         [DataType(DataType.Date)]
         public DateTime DateOfJoining { get; set; }
 
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
     }
 }
