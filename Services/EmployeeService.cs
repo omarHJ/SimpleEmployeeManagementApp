@@ -60,6 +60,15 @@ namespace SimpleEmployeeManagementApp.Services
 
             await _context.Database.ExecuteSqlRawAsync("EXEC UpdateEmployee @Id, @FirstName, @LastName, @Position, @Email, @Salary, @DateOfJoining, @IsActive", parameters);
         }
+        public async Task<Employee> GetEmployeeByIdAsync(int id)
+        {
+            var parameter = new SqlParameter("@Id", id);
+            var employee = await _context.Employees
+                .FromSqlRaw("EXEC GetEmployeeById @Id", parameter)
+                .ToListAsync();
+
+            return employee.FirstOrDefault();
+        }
     }
 }
 

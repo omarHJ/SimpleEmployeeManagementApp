@@ -8,5 +8,6 @@ namespace SimpleEmployeeManagementApp.Services
         Task<Employee> AddEmployeeAsync(Employee employee);
         Task UpdateEmployeeAsync(Employee employee);
         Task DeleteEmployeeAsync(int id);
+        Task<Employee> GetEmployeeByIdAsync(int id); 
     }
 }
