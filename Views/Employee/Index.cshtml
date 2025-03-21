@@ -4,8 +4,11 @@
     ViewData["Title"] = "Employee List";
 }
 
-<h2>Employee List</h2>
-
+<div class="d-flex justify-content-between align-items-center">
+    <h2>Employee List</h2>
+    <input type="text" id="searchInput" class="form-control w-25" placeholder="Search...">
+</div>
+<br />
 <table class="table">
     <thead>
         <tr>
@@ -16,10 +19,10 @@
             <th>Salary</th>
             <th>Date Of Joining</th>
             <th>Is Active</th>
-            <th>Actions</th> 
+            <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="employeeTable">
         @foreach (var employee in Model)
         {
             <tr>
@@ -42,3 +45,27 @@
 <div class="text-center">
     <a asp-action="Create" class="btn btn-success">Add New Employee</a>
 </div>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const tableRows = document.querySelectorAll('#employeeTable tr');
+
+    searchInput.addEventListener('input', function () {
+        const query = searchInput.value.toLowerCase(); 
+
+        tableRows.forEach(row => {
+            const cells = row.getElementsByTagName('td'); 
+            let rowText = ''; 
+
+            for (let i = 0; i < cells.length; i++) {
+                rowText += cells[i].textContent.toLowerCase(); 
+            }
+
+            if (rowText.includes(query)) {
+                row.style.display = ''; 
+            } else {
+                row.style.display = 'none'; 
+            }
+        });
+    });
+</script>
