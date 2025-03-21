@@ -55,7 +55,7 @@ namespace SimpleEmployeeManagementApp.Services
                 new SqlParameter("@Email", employee.Email),
                 new SqlParameter("@Salary", employee.Salary),
                 new SqlParameter("@DateOfJoining", employee.DateOfJoining),
-                new SqlParameter("@IsActive", employee.IsActive)
+                new SqlParameter("@IsActive", true)
             };
 
             await _context.Database.ExecuteSqlRawAsync("EXEC UpdateEmployee @Id, @FirstName, @LastName, @Position, @Email, @Salary, @DateOfJoining, @IsActive", parameters);
